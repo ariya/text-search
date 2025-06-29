@@ -1,0 +1,19 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+
+    - run: npm ci
+
+    - run: ./text-search.js solar-system.txt "gas giants composition" | tee output.txt | grep -i "helium"
+
+    - run: cat output.txt
+      if: always()
