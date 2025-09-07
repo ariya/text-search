@@ -15,9 +15,9 @@ const FEATURE_MODEL = 'Xenova/all-MiniLM-L6-v2';
  * @returns {vector[]} - The resulting array of vectors after encoding.
  */
 const encode = async (input, model = FEATURE_MODEL) => {
-    const transformers = await import('@xenova/transformers');
+    const transformers = await import('@huggingface/transformers');
     const { pipeline } = transformers;
-    const extractor = await pipeline('feature-extraction', model, { quantized: true });
+    const extractor = await pipeline('feature-extraction', model, { quantized: true, dtype: 'q8' });
 
     const vectors = [];
     for (let index = 0; index < input.length; ++index) {
